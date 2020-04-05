@@ -25,6 +25,8 @@ pipenv = {editable = true,path = "/home/maartens/Documents/Programming/Projects/
 pip-shims = "*"
 setuptools = "*"
 wheel = "*"
+twine = "*"
+flask = "*"
 
 [requires]
 python_version = "3.7"
