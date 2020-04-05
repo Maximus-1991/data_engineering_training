@@ -18,12 +18,16 @@
 # under the License.
 
 from __future__ import print_function
+import os
+import sys
 
 import airflow
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
 
-from src.config import *
+parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+sys.path.insert(0, parent_dir)
+
 from src.models.train_model import train_model
 from src.data.retrieve_data import load_data
 from src.data.generate_dataset import generate_train_test_val_dataset

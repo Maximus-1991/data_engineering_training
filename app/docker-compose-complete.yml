@@ -15,10 +15,11 @@ services:
             - LOAD_EX=n
             - EXECUTOR=Local
         volumes:
-            - ./dags/src:/usr/local/airflow/dags/src
+            - ./dags:/usr/local/airflow/dags
+            - ./src:/usr/local/src
             - ./requirements.txt:/requirements.txt
-            - ./models:/usr/local/airflow/models
-            - ./data:/usr/local/airflow/data
+            - ./models:/usr/local/models
+            - ./data:/usr/local/data
         ports:
             - "8080:8080"
         command: webserver
@@ -32,5 +33,5 @@ services:
         ports:
             - "5000:5000" #Binds the docker container and the host machine to the exposed port, 5000
         command: gunicorn --bin 0.0.0.0:5000 wsgi:app #Serves the app on 0.0.0.0:5000
-        volumes:
-            - .:/usr/local/airflow
+#        volumes:
+#            - .:/usr/local/
