@@ -14,5 +14,5 @@ loguru
 numpy
 flask
 gunicorn
-tensorflow==2.0.0
+tensorflow==2.0.1
 python-dotenv>=0.5.1
