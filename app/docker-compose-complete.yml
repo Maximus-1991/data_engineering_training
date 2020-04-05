@@ -1,0 +1,37 @@
+version: '3.3'
+services:
+    postgres:
+        image: postgres:9.6
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+    airflow:
+        image: puckel/docker-airflow:latest
+        restart: always
+        depends_on:
+            - postgres
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Local
+        volumes:
+            - ./dags/src:/usr/local/airflow/dags/src
+            - ./requirements.txt:/requirements.txt
+            - ./models:/usr/local/airflow/models
+            - ./data:/usr/local/airflow/data
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 31s
+            retries: 3
+    app:
+        build: . #app service uses an image that’s built from the Dockerfile in the current directory
+        ports:
+            - "5000:5000" #Binds the docker container and the host machine to the exposed port, 5000
+#        command: gunicorn --bin 0.0.0.0:5000 dags.wsgi:app #Serves the app on 0.0.0.0:5000
+        command: gunicorn --bin 0.0.0.0:5000 wsgi:app #Serves the app on 0.0.0.0:5000
+        volumes:
+            - .:/usr/local/airflow
