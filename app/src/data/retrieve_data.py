@@ -26,3 +26,4 @@ def load_data(data_url):
         logger.error("Error: %s : %s" % (zip_path, e.strerror))
 
 
+
