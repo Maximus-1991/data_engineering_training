@@ -28,10 +28,20 @@ services:
             interval: 30s
             timeout: 31s
             retries: 3
+    tensorflow-serving:
+        image: 'tensorflow/serving'
+        ports:
+            - '8500:8500'
+            - '8501:8501'
+        volumes:
+            - ./model_binaries:/models/image_classification
+        environment:
+            - MODEL_NAME=image_classification
     app:
         build: . #app service uses an image that’s built from the Dockerfile in the current directory
         ports:
             - "5000:5000" #Binds the docker container and the host machine to the exposed port, 5000
         command: gunicorn --bin 0.0.0.0:5000 wsgi:app #Serves the app on 0.0.0.0:5000
-#        volumes:
-#            - .:/usr/local/
+
+        #volumes:
+        #    - .:/usr/local/

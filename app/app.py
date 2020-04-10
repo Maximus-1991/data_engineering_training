@@ -17,6 +17,7 @@ def predict_json():
     image = np.array([image]) #input of model is (batch_size, 32, 32, 3)
     prediction = predict(image).tolist()
     print(prediction)
+    #TODO: Add requests.post to retrieve the response
     return {'prediction':prediction}
 
 

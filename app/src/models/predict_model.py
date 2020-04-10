@@ -12,7 +12,7 @@ def predict(X):
     predictions = np.array(model.predict(X, batch_size=100))
     # Take the highest prediction
     predictions = np.argmax(predictions, axis=1)
-
+    #TODO: add prediction idx (np.argmax) but also decoded label (e.g. dog)
     return predictions
 
 
